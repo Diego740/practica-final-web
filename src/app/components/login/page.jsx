@@ -1,5 +1,6 @@
 "use client";
 
+import Link from 'next/link';
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
@@ -106,6 +107,8 @@ const Login = () => {
             {formik.isSubmitting ? "Cargando..." : "Iniciar Sesión"}
           </button>
         </form>
+        <p className="register-text">¿No estás registrado?</p>
+        <Link className="register-link" href="/register">Regístrate</Link>
       </div>
     </div>
   );

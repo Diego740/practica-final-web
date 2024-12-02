@@ -12,7 +12,7 @@ export default function Navbar() {
                 <Link href="/projects" className="hover:bg-gray-700 px-4 py-2 rounded">Proyectos</Link>
                 <Link href="/deliverynotes" className="hover:bg-gray-700 px-4 py-2 rounded">Albaranes</Link>
                 <Link href="/settings" className="hover:bg-gray-700 px-4 py-2 rounded">Ajustes</Link>
-                <Link href="/register" className="hover:bg-gray-700 px-4 py-2 rounded">Registro</Link>
+                <Link href="/components/login" className="hover:bg-gray-700 px-4 py-2 rounded">LogIn</Link>
             </nav>
         </div>
     );

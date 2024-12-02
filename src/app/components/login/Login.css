@@ -86,3 +86,28 @@
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
   }
   
+  .form-input:focus {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1f2937;
+    margin-top: 16px;
+  }
+
+  .register-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1f2937;
+    margin-top: 16px;
+  }
+
+  .register-link {
+    color: #2563eb;
+    text-decoration: underline;
+    font-weight: 500;
+    font-size: 14px;
+    transition: color 0.2s ease;
+  }
+
+  .register-link:hover {
+    color: #1d4ed8;
+  }
