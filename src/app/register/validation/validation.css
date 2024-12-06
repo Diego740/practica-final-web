@@ -1,0 +1,81 @@
+.validation-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f9fafb;
+    padding: 1rem;
+    border-radius: 10px;
+  }
+  
+  .validation-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 24px;
+  }
+
+  .validation-text {
+    font-size: 16px;
+    color: #1f2937;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  
+  .validation-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .digit-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  
+  .digit-input {
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+    text-align: center;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    color: #1f2937;
+  }
+  
+  .digit-input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  }
+  
+  .validation-button {
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #3b82f6;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .validation-button:hover {
+    background-color: #2563eb;
+  }
+  
+  .digit-input.error {
+    border-color: #ef4444; /* Rojo para errores */
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+  }
+  .form-error {
+    color: #ef4444;
+    font-size: 12px;
+    margin-top: 8px;
+    margin-bottom: 6px;
+  }
+  

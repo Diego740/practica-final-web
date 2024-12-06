@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
 import "./Login.css";
+import { setCookie } from '@/app/utils/cookiesUtils';
 
 
 const Login = () => {
@@ -39,12 +40,23 @@ const Login = () => {
         if (response.ok) {
           const { token } = await response.json();
           localStorage.setItem("jwt", token); // Guardar el token en localStorage
-          router.push("/dashboard"); // Redirigir al dashboard
+          //document.cookie = `jwt=${token}; path=/; Secure; SameSite=Strict`;
+          //setCookie("jwt", token);
+          console.log(token);
+
+          router.push("/components/dashboard"); // Redirigir al dashboard
+
+
+        } else if (response.status === 401) {
+          setErrors({ apiError: "La contraseña no es correcta." });
+        } else if (response.status === 404) {
+          setErrors({ apiError: "El usuario no se ha encontrado." });
         } else {
           const error = await response.json();
           setErrors({ apiError: error.message || "Error al iniciar sesión" });
         }
       } catch (error) {
+        console.error(error);
         setErrors({ apiError: "Error en la conexión con el servidor" });
       } finally {
         setSubmitting(false);
@@ -57,6 +69,7 @@ const Login = () => {
       <div className="login-card">
         <h3 className="login-title">Iniciar Sesión</h3>
         <form onSubmit={formik.handleSubmit}>
+
           {/* Campo de correo electrónico */}
           <div className="form-group">
             <label htmlFor="email" className="form-label">

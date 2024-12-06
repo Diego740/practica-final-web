@@ -1,4 +1,4 @@
-/* Contenedor principal */
+
 .login-container {
     display: flex;
     justify-content: center;
@@ -8,7 +8,7 @@
     border-radius: 10px;
   }
   
-  /* Tarjeta del formulario */
+
   .login-card {
     width: 100%;
     max-width: 400px;
@@ -18,7 +18,7 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
-  /* Título */
+
   .login-title {
     text-align: center;
     font-size: 24px;
@@ -27,7 +27,7 @@
     margin-bottom: 24px;
   }
   
-  /* Estilo del grupo de formulario */
+
   .form-group {
     margin-bottom: 16px;
   }
@@ -61,9 +61,10 @@
     color: #ef4444;
     font-size: 12px;
     margin-top: 4px;
+    margin-bottom: 4px;
   }
   
-  /* Botón de envío */
+
   .form-button {
     width: 100%;
     padding: 12px;

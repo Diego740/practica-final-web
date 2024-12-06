@@ -31,8 +31,7 @@ const Register = () => {
     }),
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
-        const response = await fetch(
-          "https://bildy-rpmaya.koyeb.app/api/user/register",
+        const response = await fetch("https://bildy-rpmaya.koyeb.app/api/user/register",
           {
             method: "POST",
             headers: {
@@ -47,7 +46,15 @@ const Register = () => {
         );
 
         if (response.ok) {
-          router.push("/"); //Redirigir al login después del registro
+          localStorage.setItem("emailForValidation", values.email); //almacenar correo el localStorage para la verificacion
+          router.push("/register/validation");
+          const data = await response.json();
+          localStorage.setItem("jwt", data.token);
+          //document.cookie = `jwt=${data.token}; path=/; Secure; HttpOnly; SameSite=Strict`;
+          //setCookie("jwt", data.token);
+
+          console.log(data.token);
+          console.log(data);
         } else {
           const error = await response.json();
           setErrors({ apiError: error.message || "Error al registrar usuario" });
