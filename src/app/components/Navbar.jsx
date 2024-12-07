@@ -2,26 +2,11 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+
 
 
 export default function Navbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para el inicio de sesión
-  const router = useRouter();
-
-  useEffect(() => {
-    // Verificar si el token está presente en localStorage
-    const token = localStorage.getItem("jwt");
-    setIsLoggedIn(!!token); // Actualizar el estado según la presencia del token
-  }, []);
-
-  const handleLogout = () => {
-    // Eliminar el token de localStorage
-    localStorage.removeItem("jwt");
-
-    setIsLoggedIn(false); // Actualizar el estado
-    router.push("/"); // Redirigir al usuario a la página de inicio
-  };
+   
 
   return (
     <div className="flex flex-col h-screen w-64 bg-gray-800 text-white fixed">

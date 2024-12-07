@@ -37,8 +37,9 @@ const Projects = () => {
 
   const handleAddProject = async (values) => {
     try {
-      await addProject(values);
-      setProjects(fetchedProjects);
+      const newProject = await addProject(values);
+      setProjects((prevProjects) => [...prevProjects, newProject]);
+      setFilteredProjects((prevFiltered) => [...prevFiltered, newProject]);
       setIsAdding(false);
     } catch (error) {
       console.error("Error al agregar proyecto:", error);
@@ -46,27 +47,47 @@ const Projects = () => {
   };
 
   const handleEditProject = async (values) => {
-    try {
-      const updatedProject = await editProject(values);
-      setProjects((prevProjects) =>
-        prevProjects.map((proj) => (proj._id === updatedProject._id ? updatedProject : proj))
-      );
-      setEditingProject(null);
-    } catch (error) {
-      console.error("Error al editar proyecto:", error);
-    }
-  };
+  try {
+    console.log("Valores antes de editar:", values); // Verificar datos enviados
+    const updatedProject = await editProject(values);
+
+    // Actualizar proyectos en el estado
+    setProjects((prevProjects) =>
+      prevProjects.map((proj) =>
+        proj._id === updatedProject._id ? updatedProject : proj
+      )
+    );
+    setEditingProject(null);
+    alert("Proyecto actualizado correctamente.");
+  } catch (error) {
+    console.error("Error al editar proyecto:", error);
+    alert("Hubo un error al editar el proyecto.");
+  }
+};
+
 
   const handleDeleteProject = async (projectId) => {
     try {
-      const success = await deleteProject(projectId);
+      const success = await deleteProject(projectId); // Llamada a la API para eliminar el proyecto
       if (success) {
-        setProjects((prevProjects) => prevProjects.filter((proj) => proj._id !== projectId));
+        // Actualizar los estados locales `projects` y `filteredProjects`
+        setProjects((prevProjects) =>
+          prevProjects.filter((proj) => proj._id !== projectId)
+        );
+        setFilteredProjects((prevFiltered) =>
+          prevFiltered.filter((proj) => proj._id !== projectId)
+        );
+  
+        alert("Proyecto eliminado correctamente.");
+      } else {
+        alert("No se pudo eliminar el proyecto.");
       }
     } catch (error) {
       console.error("Error al eliminar proyecto:", error);
+      alert("Hubo un error al intentar eliminar el proyecto.");
     }
   };
+  
 
   // Función para filtrar los proyectos según el cliente
   const handleClientFilterChange = (clientId) => {
@@ -96,51 +117,54 @@ const Projects = () => {
   }
 
   return (
-    <div className="container mx-auto p-6 bg-gray-100 rounded-xl h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-gray-700">Gestión de Proyectos</h1>
+    <div className="flex items-center justify-center h-screen bg-gray-100 rounded-xl">
+      <div className="container mx-auto p-6 bg-gray-100 rounded-xl h-screen">
+            <h1 className="text-3xl font-bold mb-6 text-gray-700">Gestión de Proyectos</h1>
 
-      
-      <ClientFilter clients={clients} onFilterChange={handleClientFilterChange} />
+            
+            <ClientFilter clients={clients} onFilterChange={handleClientFilterChange} />
 
-      {editingProject ? (
-        <div className="mb-6">
-          <h2 className="text-xl font-semibold mb-4 text-gray-700">Editar Proyecto</h2>
-          <ProjectForm
-            onSubmit={handleEditProject}
-            onCancel={() => setEditingProject(null)}
-            initialValues={editingProject}
-            clients={clients}
-          />
-        </div>
-      ) : (
-        <>
-          <ProjectList
-            projects={filteredProjects}
-            onEdit={setEditingProject}
-            onDelete={handleDeleteProject}
-          />
-          {!isAdding && (
-            <button
-              onClick={() => setIsAdding(true)}
-              className="py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-            >
-              Agregar Proyecto
-            </button>
-          )}
-        </>
-      )}
+            {editingProject ? (
+              <div className="mb-6">
+                <h2 className="text-xl font-semibold mb-4 text-gray-700">Editar Proyecto</h2>
+                <ProjectForm
+                  onSubmit={handleEditProject}
+                  onCancel={() => setEditingProject(null)}
+                  initialValues={editingProject}
+                  clients={clients}
+                />
+              </div>
+            ) : (
+              <>
+                <ProjectList
+                  projects={filteredProjects}
+                  onEdit={setEditingProject}
+                  onDelete={handleDeleteProject}
+                />
+                {!isAdding && (
+                  <button
+                    onClick={() => setIsAdding(true)}
+                    className="py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                  >
+                    Agregar Proyecto
+                  </button>
+                )}
+              </>
+            )}
 
-      {isAdding && (
-        <div className="mt-6">
-          <h2 className="text-xl font-semibold mb-4 text-gray-700">Agregar Nuevo Proyecto</h2>
-          <ProjectForm
-            onSubmit={handleAddProject}
-            onCancel={() => setIsAdding(false)}
-            clients={clients}
-          />
-        </div>
-      )}
+            {isAdding && (
+              <div className="mt-6">
+                <h2 className="text-xl font-semibold mb-4 text-gray-700">Agregar Nuevo Proyecto</h2>
+                <ProjectForm
+                  onSubmit={handleAddProject}
+                  onCancel={() => setIsAdding(false)}
+                  clients={clients}
+                />
+              </div>
+            )}
+          </div>
     </div>
+    
   );
 };
 

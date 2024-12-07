@@ -133,7 +133,7 @@ const ProjectForm = ({ onSubmit, onCancel, initialValues = {}, clients }) => {
       <div>
         <label htmlFor="address.postal" className="block text-gray-700">Código Postal</label>
         <input
-          type="text"
+          type="number"
           name="address.postal"
           id="address.postal"
           value={formik.values.address.postal}

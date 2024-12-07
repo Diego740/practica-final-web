@@ -32,6 +32,7 @@ export const addProject = async (values) => {
     const token = getToken();
   
     try {
+      console.log(values);
       const response = await fetch(API_URL, {
         method: "POST",
         headers: {
@@ -43,11 +44,11 @@ export const addProject = async (values) => {
           projectCode: values.projectCode,
           email: values.email,
           address: {
-            street: values.street,
-            number: values.number,
-            postal: values.postal,
-            city: values.city,
-            province: values.province,
+            street: values.address.street,
+            number: parseInt(values.address.number, 10), // Convertir a número
+            postal: parseInt(values.address.postal, 10), // Convertir a número
+            city: values.address.city,
+            province: values.address.province,
           },
           code: values.code,
           clientId: values.clientId,
@@ -71,7 +72,7 @@ export const addProject = async (values) => {
 
 
 export const editProject = async (values) => {
-  const token = getToken();
+  const token = localStorage.getItem("jwt");
 
   try {
     const response = await fetch(`${API_URL}/${values._id}`, {
@@ -85,11 +86,11 @@ export const editProject = async (values) => {
         projectCode: values.projectCode,
         email: values.email,
         address: {
-          street: values.street,
-          number: values.number,
-          postal: values.postal,
-          city: values.city,
-          province: values.province,
+          street: values.address.street,
+          number: values.address.number,
+          postal: values.address.postal,
+          city: values.address.city,
+          province: values.address.province,
         },
         code: values.code,
         clientId: values.clientId,
@@ -98,14 +99,14 @@ export const editProject = async (values) => {
 
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
+      console.log("Proyecto actualizado:", data);
       return data;
     } else {
       const error = await response.json();
       throw new Error("Hubo un error al actualizar el proyecto: " + error.message);
     }
   } catch (err) {
-    console.error("Error al actualizar proyecto", err);
+    console.error("Error al actualizar proyecto:", err);
     throw err;
   }
 };
