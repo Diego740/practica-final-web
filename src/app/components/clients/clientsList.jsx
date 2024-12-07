@@ -21,19 +21,23 @@ const ClientList = ({ clients, onEdit, onDelete }) => {
             <div className="flex space-x-2">
               <button
                 onClick={() => handleExpand(client._id)}
-                className="text-blue-600 hover:text-blue-800"
+                className={`ml-4 py-2 px-4 ${
+                expandedClientId === client._id
+                  ? "bg-gray-500"
+                  : "bg-blue-600"
+              } text-white rounded-lg`}
               >
                 {expandedClientId === client._id ? "Cerrar" : "Ver Más"}
               </button>
               <button
                 onClick={() => onEdit(client)}
-                className="text-yellow-600 hover:text-yellow-800"
+                className="mr-4 py-2 px-4 bg-yellow-500 text-white rounded-lg"
               >
                 Editar
               </button>
               <button
                 onClick={() => onDelete(client._id)}
-                className="text-red-600 hover:text-red-800"
+                className="py-2 px-4 bg-red-600 text-white rounded-lg"
               >
                 Eliminar
               </button>

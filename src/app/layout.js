@@ -1,12 +1,15 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "./components/Navbar";
+import Topbar from "./components/TopBar"; // Importa el componente de la topbar
 
+// Cargar fuentes locales
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
   weight: "100 900",
 });
+
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
@@ -24,14 +27,20 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-      <div className="flex">
-        <Navbar/>
-      </div>
-        
-      <div className="ml-64 p-4 flex-1">
-        {children}
-      </div>
-        
+        <div className="flex flex-col h-screen">
+          {/* Topbar */}
+          <Topbar />
+
+          <div className="flex flex-1">
+            {/* Barra de navegación fija en el lateral izquierdo */}
+            <Navbar />
+            
+            {/* Contenido principal que ocupa el resto de la pantalla */}
+            <main className="ml-64 p-4 flex-1 overflow-y-auto">
+              {children}
+            </main>
+          </div>
+        </div>
       </body>
     </html>
   );

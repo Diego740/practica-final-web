@@ -26,7 +26,7 @@ export default function Navbar() {
   return (
     <div className="flex flex-col h-screen w-64 bg-gray-800 text-white fixed">
       <div className="p-4">
-        <h1 className="text-2xl font-bold">Gestión App</h1>
+
       </div>
       <nav className="flex flex-col mt-4 space-y-2">
         <Link href="/components/dashboard" className="hover:bg-gray-700 px-4 py-2 rounded">
@@ -35,28 +35,13 @@ export default function Navbar() {
         <Link href="/components/clients" className="hover:bg-gray-700 px-4 py-2 rounded">
           Clientes
         </Link>
-        <Link href="/projects" className="hover:bg-gray-700 px-4 py-2 rounded">
+        <Link href="/components/projects" className="hover:bg-gray-700 px-4 py-2 rounded">
           Proyectos
         </Link>
-        <Link href="/deliverynotes" className="hover:bg-gray-700 px-4 py-2 rounded">
+        <Link href="/components/deliveryNotes" className="hover:bg-gray-700 px-4 py-2 rounded">
           Albaranes
         </Link>
-        <Link href="/settings" className="hover:bg-gray-700 px-4 py-2 rounded">
-          Ajustes
-        </Link>
-
-        {!isLoggedIn ? (
-          <Link href="/components/login" className="hover:bg-gray-700 px-4 py-2 rounded">
-            LogIn
-          </Link>
-        ) : (
-          <button
-            onClick={handleLogout}
-            className="text-left hover:bg-gray-700 px-4 py-2 rounded"
-          >
-            Cerrar Sesión
-          </button>
-        )}
+        
       </nav>
     </div>
   );
