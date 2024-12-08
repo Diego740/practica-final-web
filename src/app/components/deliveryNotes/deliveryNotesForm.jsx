@@ -129,7 +129,6 @@ const DeliveryNoteForm = ({ onSubmit }) => {
           <label htmlFor="format" className="block font-medium text-gray-700">
             Formato
           </label>
-          <input
           <select
             name="format"
             id="format"
