@@ -124,19 +124,23 @@ const DeliveryNoteForm = ({ onSubmit }) => {
           )}
         </div>
 
-        {/* Otros campos */}
+
         <div>
           <label htmlFor="format" className="block font-medium text-gray-700">
             Formato
           </label>
           <input
-            type="text"
+          <select
             name="format"
             id="format"
             value={formik.values.format}
             onChange={formik.handleChange}
             className="w-full p-2 border border-gray-300 rounded-lg text-gray-700"
-          />
+          >
+            <option value="">Seleccionar formato</option>
+            <option value="hours">Horas</option>
+            <option value="material">Material</option>
+          </select>
           {formik.errors.format && formik.touched.format && (
             <div className="text-red-500 text-sm">{formik.errors.format}</div>
           )}
