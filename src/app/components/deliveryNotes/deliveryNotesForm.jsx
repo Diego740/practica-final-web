@@ -2,51 +2,8 @@
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useEffect, useState } from "react";
 
-const DeliveryNoteForm = ({ onSubmit }) => {
-  const [clients, setClients] = useState([]); // Lista de clientes
-  const [projects, setProjects] = useState([]); // Lista de proyectos
-  const [isLoading, setIsLoading] = useState(true); // Para manejar el estado de carga
-
-  // Cargar los clientes y proyectos desde la API
-  useEffect(() => {
-    const fetchClientsAndProjects = async () => {
-      try {
-        const token = localStorage.getItem("jwt");
-        const clientResponse = await fetch("https://bildy-rpmaya.koyeb.app/api/client", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const projectResponse = await fetch("https://bildy-rpmaya.koyeb.app/api/project", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (clientResponse.ok && projectResponse.ok) {
-          const clientsData = await clientResponse.json();
-          const projectsData = await projectResponse.json();
-          setClients(clientsData);
-          setProjects(projectsData);
-        } else {
-          console.error("Error al obtener clientes o proyectos");
-        }
-      } catch (err) {
-        console.error("Error en la conexión", err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchClientsAndProjects();
-  }, []);
-
+const DeliveryNoteForm = ({ onSubmit, clients, projects }) => {
   const formik = useFormik({
     initialValues: {
       clientId: "",
@@ -68,10 +25,6 @@ const DeliveryNoteForm = ({ onSubmit }) => {
     }),
     onSubmit,
   });
-
-  if (isLoading) {
-    return <div>Cargando...</div>; // Mostrar un mensaje mientras se cargan los datos
-  }
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -124,7 +77,7 @@ const DeliveryNoteForm = ({ onSubmit }) => {
           )}
         </div>
 
-
+        {/* Otros campos */}
         <div>
           <label htmlFor="format" className="block font-medium text-gray-700">
             Formato
