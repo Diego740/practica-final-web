@@ -45,6 +45,7 @@ const Login = () => {
           console.log(token);
 
           router.push("/components/dashboard"); // Redirigir al dashboard
+          window.location.reload();
 
 
         } else if (response.status === 401) {

@@ -23,7 +23,7 @@ const TopBar = () => {
   };
 
   return (
-    <header className="flex justify-between items-center bg-gray-800 text-white p-4">
+    <div className="flex justify-between items-center bg-gray-800 text-white p-4">
       <h2 className="text-2xl font-bold">Gestión albaranes APP</h2>
       <div className="flex space-x-4">
         {/* Condición para mostrar LogIn o Cerrar sesión */}
@@ -43,13 +43,13 @@ const TopBar = () => {
           </button>
         )}
         <Link
-          href="/settings"
+          href="/components/settings"
           className="hover:bg-gray-700 px-4 py-2 rounded"
         >
           Ajustes
         </Link>
       </div>
-    </header>
+    </div>
   );
 };
 
