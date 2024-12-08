@@ -48,17 +48,14 @@ const Projects = () => {
 
   const handleEditProject = async (values) => {
   try {
-    console.log("Valores antes de editar:", values); // Verificar datos enviados
+
     const updatedProject = await editProject(values);
 
-    // Actualizar proyectos en el estado
-    setProjects((prevProjects) =>
-      prevProjects.map((proj) =>
-        proj._id === updatedProject._id ? updatedProject : proj
-      )
-    );
+
+    setProjects(fetchProjects()); 
     setEditingProject(null);
-    alert("Proyecto actualizado correctamente.");
+    alert("Proyecto actualizado correctamente");
+    window.location.reload();
   } catch (error) {
     console.error("Error al editar proyecto:", error);
     alert("Hubo un error al editar el proyecto.");

@@ -7,6 +7,7 @@ const ProjectForm = ({ onSubmit, onCancel, initialValues = {}, clients }) => {
   // Aseguramos que `initialValues` tenga un objeto vacío para `address` en caso de que no se pase.
   const formik = useFormik({
     initialValues: {
+      _id: initialValues._id || "",
       name: initialValues.name || "",
       projectCode: initialValues.projectCode || "",
       email: initialValues.email || "",
