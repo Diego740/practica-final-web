@@ -5,6 +5,12 @@ import DeliveryNoteForm from "./deliveryNotesForm";
 import DeliveryNoteList from "./deliveryNotesList";
 import { useRouter } from "next/navigation";
 import withAuth from "../withAuth";
+import {
+  fetchDeliveryNotes,
+  addDeliveryNote,
+  deleteDeliveryNote,
+  downloadPDF,
+} from "./apiDeliveryNotes"; // Importar funciones desde apiDeliveryNotes.js
 
 const DeliveryNotes = () => {
   const [deliveryNotes, setDeliveryNotes] = useState([]);
@@ -13,7 +19,17 @@ const DeliveryNotes = () => {
   const [isAdding, setIsAdding] = useState(false);
   const router = useRouter();
 
-  
+  // Fetch all delivery notes
+  const fetchAllDeliveryNotes = async () => {
+    try {
+      const data = await fetchDeliveryNotes();
+      setDeliveryNotes(data);
+    } catch (error) {
+      console.error("Error fetching delivery notes:", error);
+    }
+  };
+
+  // Fetch clients and projects
   const fetchClientsAndProjects = async () => {
     const token = localStorage.getItem("jwt");
     try {
@@ -45,103 +61,38 @@ const DeliveryNotes = () => {
     }
   };
 
-  // Fetch all delivery notes
-  const fetchDeliveryNotes = async () => {
-    const token = localStorage.getItem("jwt");
-    try {
-      const response = await fetch("https://bildy-rpmaya.koyeb.app/api/deliverynote", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setDeliveryNotes(data);
-      } else {
-        console.error("Error al obtener los albaranes");
-      }
-    } catch (err) {
-      console.error("Error en la conexión", err);
-    }
-  };
-
   // Add a new delivery note
-  const addDeliveryNote = async (values) => {
-    const token = localStorage.getItem("jwt");
+  const addNewDeliveryNote = async (values) => {
     try {
-      const response = await fetch("https://bildy-rpmaya.koyeb.app/api/deliverynote", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(values),
-      });
-      if (response.ok) {
-        alert("Albarán creado correctamente");
-        fetchDeliveryNotes();
-        setIsAdding(false);
-      } else {
-        alert("Error al agregar el albarán");
-      }
-    } catch (err) {
-      console.error("Error en la conexión", err);
+      await addDeliveryNote(values);
+      fetchAllDeliveryNotes(); // Refresh the list after adding
+      setIsAdding(false);
+    } catch (error) {
+      console.error("Error adding delivery note:", error);
     }
   };
 
   // Delete a delivery note
-  const deleteDeliveryNote = async (id) => {
-    const token = localStorage.getItem("jwt");
+  const deleteDeliveryNoteHandler = async (id) => {
     try {
-      const response = await fetch(`https://bildy-rpmaya.koyeb.app/api/deliverynote/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (response.ok) {
-        alert("Albarán eliminado correctamente");
-        fetchDeliveryNotes();
-      } else {
-        alert("Error al eliminar el albarán");
-      }
-    } catch (err) {
-      console.error("Error en la conexión", err);
+      await deleteDeliveryNote(id);
+      fetchAllDeliveryNotes(); // Refresh the list after deletion
+    } catch (error) {
+      console.error("Error deleting delivery note:", error);
     }
   };
 
-  // Download delivery note PDF
-  const downloadPDF = async (id) => {
-    const token = localStorage.getItem("jwt");
+  // Download a PDF
+  const downloadPDFHandler = async (id) => {
     try {
-      const response = await fetch(`https://bildy-rpmaya.koyeb.app/api/deliverynote/pdf/${id}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (response.ok) {
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", `albaran-${id}.pdf`);
-        document.body.appendChild(link);
-        link.click();
-        link.parentNode.removeChild(link);
-      } else {
-        alert("Error al descargar el PDF");
-      }
-    } catch (err) {
-      console.error("Error en la conexión", err);
+      await downloadPDF(id);
+    } catch (error) {
+      console.error("Error downloading PDF:", error);
     }
   };
 
   useEffect(() => {
-    fetchDeliveryNotes();
+    fetchAllDeliveryNotes();
     fetchClientsAndProjects();
   }, []);
 
@@ -152,9 +103,9 @@ const DeliveryNotes = () => {
 
         <DeliveryNoteList
           deliveryNotes={deliveryNotes}
-          onDelete={deleteDeliveryNote}
-          onView={downloadPDF}
-          clients = {clients}
+          onDelete={deleteDeliveryNoteHandler}
+          onView={downloadPDFHandler}
+          clients={clients}
         />
 
         <button
@@ -167,9 +118,7 @@ const DeliveryNotes = () => {
         {isAdding && (
           <div className="mt-6 p-6 bg-white rounded-lg shadow-md">
             <h3 className="text-2xl font-bold mb-4 text-gray-800">Agregar Nuevo Albarán</h3>
-            <DeliveryNoteForm onSubmit={addDeliveryNote} 
-            clients={clients}
-            projects={projects}/>
+            <DeliveryNoteForm onSubmit={addNewDeliveryNote} clients={clients} projects={projects} />
           </div>
         )}
       </div>
