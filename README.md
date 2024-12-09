@@ -1,3 +1,16 @@
+##LINK TO VERCEL DEPLOY
+https://gestion-app-vert.vercel.app
+
+
+NOTA: Si se ejecuta de forma local el login redirige correctamente tras un login correcto al dashboard, en vercel esto no ocurre
+DATOS USUARIO DEMO: 
+- User: diego.aranda2@live.u-tad.com
+- Password: holahola123
+
+
+
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
