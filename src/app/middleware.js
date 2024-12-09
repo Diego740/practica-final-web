@@ -1,5 +1,4 @@
-// app/middleware.js
-
+/*
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
@@ -26,3 +25,4 @@ export const config = {
     "/deliverynotes/*",   // Rutas que requieren autenticación
   ],
 };
+*/
