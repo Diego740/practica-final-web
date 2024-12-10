@@ -1,4 +1,4 @@
-NOTA: Si se ejecuta de forma local el login redirige correctamente tras un login correcto al dashboard, en vercel esto no ocurre
+NOTA: Si se ejecuta de forma local las redirecciones en caso de no estar autenticado funcionan, en vercel no llegan a implementarse
 
 DATOS USUARIO DEMO: 
 - User: diego.aranda2@live.u-tad.com
